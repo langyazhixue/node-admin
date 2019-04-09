@@ -2,6 +2,7 @@ var  express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
 var multer = require('multer')
+var fs = require('fs')
 // cookie
 var cookieParser = require('cookie-parser')
 app.use(cookieParser())
@@ -45,6 +46,55 @@ app.post('/server/sendName',function(req,res) {
 app.post('/server/upload',upload.array('file',5),function(req,res) {
   console.log(req.files)
   res.send('success')
+})
+// RESTFUL API  增删改查
+
+
+// 查询列表
+app.get('/server/listUsers', function (req, res) {
+  console.log(req.query)
+  fs.readFile( __dirname + "/data/" + "users.json", 'utf8', function (err, data) {
+      console.log( data )
+      res.end( JSON.parse(data) )
+  })
+})
+
+// 增加表单数据
+app.post('/server/addUser',function(req,res) {
+  let addDataItem = req.body
+  fs.readFile(__dirname + "/data/" + "users.json", 'utf8', function (err, data) {
+    let data11 = JSON.parse(data)
+    data11['user4'] = addDataItem
+    fs.writeFile(__dirname + "/data/" + "users.json", JSON.stringify(data11),{ encoding:'utf8' },(err) => {
+      if(err) {
+        return console.log(err)
+      }
+      // 返回成功
+      res.end('success')
+    })
+  })
+})
+
+// 获取某个用户的详情
+app.get('/server/getUser/:id', (req, res) => {
+  let id = req.params.id
+  fs.readFile(__dirname + "/data/" + "users.json",'utf8',(err, data) =>{
+    if(err) {
+      return console.log(err)
+    } 
+    let data11 = JSON.parse(data)
+    var user = data11['user'+ id]
+    res.end(JSON.stringify(user))
+  })
+})
+
+// 删除用户
+
+app.del('/server/deleteUser/:id',(req, res) => {
+  let id = req.params.id
+  res.send({
+    success:'true'
+  })
 })
 
 var server = app.listen(8081, function(){
