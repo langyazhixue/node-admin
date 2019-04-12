@@ -3,6 +3,8 @@ var app = express()
 var bodyParser = require('body-parser')
 var multer = require('multer')
 var fs = require('fs')
+
+var connection = require('./db')
 // cookie
 var cookieParser = require('cookie-parser')
 app.use(cookieParser())
@@ -96,6 +98,45 @@ app.del('/server/deleteUser/:id',(req, res) => {
     success:'true'
   })
 })
+
+
+// 数据库
+connection.connect();
+// var sql = 'SELECT * FROM runoob_tbl'
+// connection.query(sql,function (err, result) {
+//   if(err){
+//     console.log('[SELECT ERROR] - ',err.message);
+//     return;
+//   }
+//  console.log('--------------------------SELECT----------------------------');
+//  console.log(result);
+//  console.log('------------------------------------------------------------\n\n');  
+// })
+
+// var addSqL = 'INSERT INTO runoob_tbl (runoob_title,runoob_author,submission_date,number) VALUES (?,?,?,?)'
+// var addSqlParams =  ['菜鸟工具', '菜鸟教程','2019-09-10', 11221]
+
+// connection.query(addSqL,addSqlParams,function (err, result) {
+//   if(err){
+//     console.log('[INSERT ERROR] - ',err.message);
+//     return;
+//    }   
+//    console.log('INSERT ID:',result);        
+// })
+
+// 跟新
+
+var modSql = 'UPDATE runoob_tbl SET runoob_title = ?, runoob_author = ?, submission_date = ?, number = ? WHERE runoob_id = ?';
+var modSqlParams = ['是否会', '知乎','2019-09-10', 200,8]
+
+connection.query(modSql, modSqlParams, function (err, result) {
+  if(err){
+    console.log('[INSERT ERROR] - ',err.message);
+    return;
+   }   
+   console.log('INSERT ID:',result);        
+})
+
 
 var server = app.listen(8081, function(){
   var host = server.address().address
