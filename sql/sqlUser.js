@@ -1,4 +1,4 @@
-const mysql = rquire('./query')
+const mysql = require('./query')
 // 查找某个用户
 exports.findUserData = ( name ) => {
   let _sql = `select * from users where name="${name}";`

@@ -7,7 +7,6 @@ var pool  = mysql.createPool({
   database : config.database.database,
   port     : config.database.port
 });
-
 let query = ( sql, values ) => {
   return new Promise(( resolve, reject ) => {
     pool.getConnection( (err, connection) => {
@@ -26,7 +25,6 @@ let query = ( sql, values ) => {
     })
   })
 }
-
 module.exports = {
   query
 }
