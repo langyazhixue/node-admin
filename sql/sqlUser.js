@@ -1,6 +1,7 @@
 const mysql = require('./query')
 // 查找某个用户
 exports.findUserData = ( name ) => {
+  console.log(name)
   let _sql = `select * from users where name="${name}";`
   return mysql.query( _sql )
 }

@@ -42,7 +42,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-console.log(users.routes())
+//console.log(users.routes())
 // routes
 app.use(index.routes()) //当后续所有中间件执行完成之后,判断ctx的status,如果next中间件已经正确处理了response响应,则直接略过
 app.use(users.routes()) //当后续所有中间件执行完成之后,判断ctx的status,如果next中间件已经正确处理了response响应,则直接略过
