@@ -46,7 +46,6 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes()) //当后续所有中间件执行完成之后,判断ctx的status,如果next中间件已经正确处理了response响应,则直接略过
 app.use(users.routes()) //当后续所有中间件执行完成之后,判断ctx的status,如果next中间件已经正确处理了response响应,则直接略过
-
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
